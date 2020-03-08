@@ -3,6 +3,8 @@ synchronize multilanguage ressource-strings between .net resx-files and android 
 
 it's a simple tool and ios will follow next
 
+# BACKUP YOUR FILES BEFORE FIRST SYNC !!!
+
 so for those who like or need to have multilanguage-strings accessable anywhere usage and requirements:
 ```
   android folder structure as default:

@@ -60,7 +60,7 @@ the sync only happenes when both files exist so if you add a new language in you
 ## howto android string-arrays?
 the way I prefer is create a new file f.e. string-arrays.xml in main-values folder and add content like this:
 ```
-    <string-array name="test_arra" translatable="false">
+    <string-array name="test_array" translatable="false">
         <item>@string/viewtype_Timeline</item>
         <item>@string/viewtype_DayView</item>
         <item>@string/viewtype_WeekView</item>

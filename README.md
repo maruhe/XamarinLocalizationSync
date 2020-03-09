@@ -38,18 +38,18 @@ as I use resx-files als main-storage that should win in case of conflicts syncTo
   Param:synctoxml is set
 
   start syncToXml
-  values\strings.xml => localize.resx
-  total 320       updated 320     new 0   deleted 0
+  localize.resx => values\strings.xml
+  total 320       updated 0     new 0   deleted 0
 
-  values-de\strings.xml => localize.de.resx
-  total 316       updated 316     new 0   deleted 0
+  localize.de.resx => values-de\strings.xml
+  total 316       updated 0     new 0   deleted 0
 
   start syncToResx
   values\strings.xml => localize.resx
-  total 320       updated 320     new 0
+  total 320       updated 0     new 0
 
   values-de\strings.xml => localize.de.resx
-  total 316       updated 316     new 0
+  total 316       updated 0     new 0
 
   all done
 ```

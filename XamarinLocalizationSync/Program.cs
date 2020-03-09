@@ -184,9 +184,16 @@ namespace XamarinLocalizationSync
                             doneKeys.Add(id);
 
                             iTotal++;
-                            iUpdated++;
                             if (!orgValues.ContainsKey(id))
+                            {
                                 iNew++;
+                                Console.WriteLine("\tadd:\t" + id);
+                            }
+                            else if (!value.Equals(orgValues[id]))
+                            {
+                                iUpdated++;
+                                Console.WriteLine("\tupdate:\t" + id);
+                            }
                         }
                     }
                 }
@@ -212,7 +219,7 @@ namespace XamarinLocalizationSync
         {
             bool res = true; //unused but could handle problems in files or a abort-signal
 
-            Console.WriteLine(Path.GetFileName(Path.GetDirectoryName(xmlPath)) + "\\" + Path.GetFileName(xmlPath) + " => " + Path.GetFileName(resxPath));
+            Console.WriteLine(Path.GetFileName(resxPath) + " => " + Path.GetFileName(Path.GetDirectoryName(xmlPath)) + "\\" + Path.GetFileName(xmlPath));
 
             //load all Values from resx-file
             Dictionary<string, string> resxValues = new Dictionary<string, string>();
@@ -232,7 +239,7 @@ namespace XamarinLocalizationSync
             int iDeleted = 0;
 
             //update values in xml
-            List<XmlNode> nodesToDelete = new List<XmlNode>();
+            List<XmlElement> nodesToDelete = new List<XmlElement>();
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlPath);
             List<string> doneKeys = new List<string>();
@@ -246,13 +253,20 @@ namespace XamarinLocalizationSync
                         string id = el.GetAttribute("name");
                         if (resxValues.ContainsKey(id))
                         {
+                            string value = resxValues[id];
+                            if (!value.Equals(el.InnerText))
+                            {
+                                iUpdated++;
+                                Console.WriteLine("\tupdate:\t" + id);
+                            }
                             el.InnerText = resxValues[id];
                             el.SetAttribute("sync", "1");
                             resxValues.Remove(id);
-                            iUpdated++;
                         }
                         else if (el.HasAttribute("sync"))
+                        {
                             nodesToDelete.Add(el); //this item was removed in resx-file
+                        }
                     }
                 }
             }
@@ -266,10 +280,12 @@ namespace XamarinLocalizationSync
                 el.InnerText = resxValues[id];
                 doc.DocumentElement.AppendChild(el);
                 iNew++;
+                Console.WriteLine("\tadd:\t" + id);
             }
 
-            foreach (XmlNode delete in nodesToDelete)
+            foreach (XmlElement delete in nodesToDelete)
             {
+                Console.WriteLine("\tdelete:\t" + delete.GetAttribute("name"));
                 doc.DocumentElement.RemoveChild(delete);
                 iDeleted++;
             }
